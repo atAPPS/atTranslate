@@ -8,44 +8,64 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.atranslate.MainActivity" >
 
-    <EditText
-        android:id="@+id/edit1"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="37dp"
-        android:layout_marginTop="27dp"
-        android:ems="10"
-        android:hint="Wyszukaj hasło" />
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/edit1"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="20dp"
-        android:text="Odpal wątek" />
+        <EditText
+            android:id="@+id/edit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:layout_weight="2"
+            android:hint="Search a word" />
 
-    <Button
-        android:id="@+id/button2"
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/edit1"
+            android:layout_weight="1"
+            android:text="Search" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/linearLayout1">
+
+        <Spinner
+        android:id="@+id/spinner1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignRight="@+id/edit1"
-        android:text="Button" />
+        android:layout_weight="1" />
+        
+         <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+        
+        
+    </LinearLayout>
+	
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/linearLayout2">
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/edit1"
-        android:layout_below="@+id/button1"
-        android:layout_marginTop="30dp"
-        android:text="Small Text"
+        android:layout_alignLeft="@+id/linearLayout2"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="66dp"
+        android:text="hhh"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

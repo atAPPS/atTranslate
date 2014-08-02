@@ -12,8 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,35 +23,14 @@ public class MainActivity extends ActionBarActivity implements Handler.Callback 
 
 	private Handler handler = new Handler(this);
 	
-	EditText e_search;
-	Button b_thread;
-	TextView tv_text;
-	Button b_AT;
+	private EditText e_search;
+	private TextView tv_text;
+	private Button b_trl;
+	private Spinner sp_1;
+	private Spinner sp_2;
 	
-	Runnable thr = new Runnable () {
-
-		@Override
-		public void run() {
-			try {
-				
-				Bundle bun = new Bundle();
-				bun.putString("okon", "Poszlo zajebiscie");
-				
-				Message mes = new Message();
-				mes.setData(bun);
-				handler.sendMessage(mes);
-				
-				Thread.sleep(5000);
-				Log.i("Wys", "Poszlo z osobnego watku");
-				
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		
-	};
+	private String[] src_langs = {"Polish", "Deutsch", "Spanish"};
+	private String[] trl_langs = {"English","Deutsch","Spanish"};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,40 +38,28 @@ public class MainActivity extends ActionBarActivity implements Handler.Callback 
 		setContentView(R.layout.activity_main);
 		
 		e_search = (EditText) findViewById(R.id.edit1);
-		b_thread = (Button) findViewById(R.id.button1);
 		
-		OnClickListener l_listen = new OnClickListener () {
-
-			@Override
-			public void onClick(View v) {
-			
-				Toast.makeText(getApplicationContext(), "Wcisniety", Toast.LENGTH_LONG).show();	
-			}
-			
-		};
+		b_trl = (Button) findViewById(R.id.button2);
 		
-		e_search.setOnClickListener(l_listen);
-		
-		b_thread.setOnClickListener(new OnClickListener (){
-
-			@Override
-			public void onClick(View v) {
-				
-				new Thread(thr).start();
-			}
-			
-		});
-		
-		b_AT = (Button) findViewById(R.id.button2);
 		tv_text = (TextView) findViewById(R.id.textView2);
-		b_AT.setOnClickListener(new OnClickListener() {
+		
+		sp_1 = (Spinner) findViewById(R.id.spinner1);
+		sp_2 = (Spinner) findViewById(R.id.spinner2);
+		
+		ArrayAdapter<String> sp1_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,trl_langs);
+		ArrayAdapter<String> sp2_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,src_langs);
+		sp_1.setAdapter(sp1_adapter);
+		sp_2.setAdapter(sp2_adapter);
+		
+		
+		b_trl.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				async AT1 = new async();
+				Translator trl = new Translator();
 				String rec;
 				try {
-					rec = AT1.execute().get();
+					rec = trl.execute(e_search.getText().toString()).get();
 					tv_text.setText(rec);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
