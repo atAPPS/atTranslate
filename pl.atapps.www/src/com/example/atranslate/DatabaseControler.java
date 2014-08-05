@@ -1,5 +1,8 @@
 package com.example.atranslate;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -29,19 +32,27 @@ public class DatabaseControler extends SQLiteOpenHelper {
 	}
 	
 
-	public void addContent(String haslo, String tlumaczenie){
+	public void addContent(Haslo haslo){
 		SQLiteDatabase db = getWritableDatabase();
 			ContentValues wartosci = new ContentValues();
-			wartosci.put("haslo", haslo);
-			wartosci.put("tlumaczenie", tlumaczenie);
+			wartosci.put("haslo", haslo.getHaslo());
+			wartosci.put("tlumaczenie", haslo.getTlumaczenie());
 			db.insertOrThrow("Hasla", null, wartosci);		
 	}
 	
-	public Cursor giveAll() {
+	public List<Haslo> giveAll() {
+		List<Haslo> hasla = new LinkedList<Haslo>();
 		String[] kolumny ={"nr","haslo","tlumaczenie"};
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor kursor = db.query("Hasla", kolumny, null, null, null, null, null);
-		return kursor;
+		while(kursor.moveToNext()){
+			Haslo haslo = new Haslo();
+			haslo.setNr(kursor.getLong(0));
+			haslo.setHaslo(kursor.getString(1));
+			haslo.setTlumaczenie(kursor.getString(2));
+			hasla.add(haslo);
+		}
+		return hasla;
 	}
 	
 	public void deleteContent(int id){
@@ -50,12 +61,27 @@ public class DatabaseControler extends SQLiteOpenHelper {
 		db.delete("hasla", "nr=?", args);
 	}
 	
-	public void updateDatabase(int nr, String haslo, String tlumaczenie){
+	public void updateContent(Haslo haslo){
 		SQLiteDatabase db = getWritableDatabase();
 			ContentValues wartosci = new ContentValues();
-			wartosci.put("haslo", haslo);
-			wartosci.put("tlumaczenie", tlumaczenie);
-			String args[]={nr+""};
+			wartosci.put("haslo", haslo.getHaslo());
+			wartosci.put("tlumaczenie", haslo.getTlumaczenie());
+			String args[]={haslo.getNr()+""};
 			db.update("Hasla", wartosci, "nr=?", args);
+	}
+	
+	public Haslo giveHaslo(int nr){
+		Haslo haslo = new Haslo();
+		SQLiteDatabase db = getReadableDatabase();
+		String[] kolumny ={"nr","haslo","tlumaczenie"};
+		String args[]={nr+""};
+		Cursor kursor = db.query("Hasla", kolumny, "nr=?", args,null, null, null, null);
+		if(kursor!=null){
+			kursor.moveToFirst();
+			haslo.setNr(kursor.getLong(0));
+			haslo.setHaslo(kursor.getString(1));
+			haslo.setTlumaczenie(kursor.getString(2));
+		}
+		return haslo;
 	}
 }
