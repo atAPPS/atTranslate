@@ -82,21 +82,35 @@
        
    </LinearLayout>
     
+   <LinearLayout 
+       android:id="@+id/linearLayout5"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/linearLayout2">
+    
+       <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout2"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+       
+   </LinearLayout>
+   
    <RelativeLayout 
        android:id="@+id/layout_other"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
-       android:layout_below="@+id/linearLayout2">
+       android:layout_below="@+id/linearLayout5">
+    
+       <ListView 
+           android:id="@+id/listview1"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content">
+           
+       </ListView>
        
    </RelativeLayout>
     
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout2"
-        android:layout_below="@+id/linearLayout2"
-        android:text="hhh"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
 	</RelativeLayout>

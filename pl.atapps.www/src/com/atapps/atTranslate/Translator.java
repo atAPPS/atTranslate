@@ -19,14 +19,19 @@ public class Translator extends AsyncTask<String, Void, String> {
 
 	private String data = new String("");
 	private String check = new String();
-	String lang_src = new String("lwa_pl");
+	
+	String set_src_language(String prm)
+	{
+		int choice = Integer.parseInt(prm);
+		return "s";
+	}
 	
 	@Override
 	protected String doInBackground(String... params) {
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 
-			String web = new String("http://www.worldlingo.com/S000.1/api?wl_data=" + params[0] + "&wl_srclang=" + lang_src + "&wl_trglang=de&wl_password=secret");
+			String web = new String("http://www.worldlingo.com/S000.1/api?wl_data=" + params[0] + "&wl_srclang=" + params[1]+ "&wl_trglang=" + params[2] + "&wl_password=secret");
 			
 			URI website = new URI(web);
 			
