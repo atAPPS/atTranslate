@@ -3,9 +3,7 @@ package com.example.atranslate;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
@@ -31,10 +29,7 @@ public class MainActivity extends Activity{
 	private Spinner sp_2;
 	private ListView lv1;
 	
-	private String[] src_langs = {"Polish", "Deutsch", "Spanish","English"};
-	private String[] trl_langs = {"English","Deutsch","Spanish","Polish"};
-	
-	private String[] trans_params = {"", "lwa_pl", "en"};
+	public TransData t_data = new TransData();
 	
 	private String[] words = {"word1","word2","word3"};
 	
@@ -57,8 +52,8 @@ public class MainActivity extends Activity{
 		ArrayAdapter<String> lv1_adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, words);
 		lv1.setAdapter(lv1_adapter);
 		
-		ArrayAdapter<String> sp1_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,src_langs);
-		ArrayAdapter<String> sp2_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,trl_langs);
+		ArrayAdapter<String> sp1_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,t_data.languages);
+		ArrayAdapter<String> sp2_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,t_data.languages);
 		
 		sp_1.setAdapter(sp1_adapter);
 		sp_2.setAdapter(sp2_adapter);
@@ -71,25 +66,8 @@ public class MainActivity extends Activity{
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				position = sp_1.getSelectedItemPosition();
-				switch(position)
-				{
-				
-				case 0:
-					trans_params[1]="lwa_pl";
-				break;
-				
-				case 1:
-					trans_params[1]="de";
-				break;
-				
-				case 2:
-					trans_params[1]="es";
-				break;
-				
-				case 3:
-					trans_params[1]="en";
-				break;
-				}	
+				t_data.SetSourceLanguage(position);
+				Log.i("ff",t_data.getSourceLanguage());
 			}
 
 			@Override
@@ -107,24 +85,8 @@ public class MainActivity extends Activity{
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				position = sp_2.getSelectedItemPosition();
-				switch(position)
-				{
-				case 0:
-					trans_params[2]="en";
-					break;
-					
-				case 1:
-					trans_params[2]="de";
-					break;
-					
-				case 2:
-					trans_params[2]="es";
-					break;
-					
-				case 3:
-					trans_params[2]="lwa_pl";
-					break;
-				}
+				t_data.SetTransLanguage(position);
+				Log.i("ff",t_data.getTransLanguage());
 				
 			}
 
@@ -140,11 +102,12 @@ public class MainActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				Translator trl = new Translator();
+				
 				String rec;
 				try {
-					trans_params[0] = e_search.getText().toString();
-					rec = trl.execute(trans_params).get();
+					Translator trl = new Translator();
+					t_data.SetData(e_search.getText().toString());
+					rec = trl.execute(t_data.GetRequest()).get();
 					tv_text.setText(rec);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
