@@ -28,13 +28,16 @@ public class MainActivity extends ActionBarActivity{
 	private ListView lv1;
 	
 	public TransData t_data = new TransData();
+	public Haslo haslo = new Haslo();
 	
-	private String[] words = {"word1","word2","word3"};
+	private String[] words = {"","",""};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		final DatabaseControler dbcon = new DatabaseControler(this);
 		
 		e_search = (EditText) findViewById(R.id.edit1);
 		
@@ -106,7 +109,13 @@ public class MainActivity extends ActionBarActivity{
 					Translator trl = new Translator();
 					t_data.SetData(e_search.getText().toString());
 					rec = trl.execute(t_data.GetRequest()).get();
+					Log.i("string",rec);
 					tv_text.setText(rec);
+					haslo.setHaslo(e_search.getText().toString());
+					haslo.setTlumaczenie(tv_text.getText().toString());
+					dbcon.addContent(haslo);
+					Log.d("dane z bazy", haslo.getHaslo()+" "+haslo.getTlumaczenie());
+
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -117,6 +126,7 @@ public class MainActivity extends ActionBarActivity{
 			}
 			
 		});
+		
 			
 	}
 	
