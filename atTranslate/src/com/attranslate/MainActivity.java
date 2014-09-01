@@ -1,5 +1,6 @@
 package com.attranslate;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import android.support.v7.app.ActionBarActivity;
 
@@ -30,7 +31,7 @@ public class MainActivity extends ActionBarActivity{
 	public TransData t_data = new TransData();
 	public Haslo haslo = new Haslo();
 	
-	private String[] words = {"","",""};
+	private ArrayList<String> words = new ArrayList<String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,9 @@ public class MainActivity extends ActionBarActivity{
 		
 		lv1 = (ListView) findViewById(R.id.listview1);
 		
-		ArrayAdapter<String> lv1_adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, words);
+		final ArrayAdapter<String> lv1_adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, words);
 		lv1.setAdapter(lv1_adapter);
+		lv1.setScrollContainer(true);
 		
 		ArrayAdapter<String> sp1_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,t_data.languages);
 		ArrayAdapter<String> sp2_adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_item,t_data.languages);
@@ -115,6 +117,8 @@ public class MainActivity extends ActionBarActivity{
 					haslo.setTlumaczenie(tv_text.getText().toString());
 					dbcon.addContent(haslo);
 					Log.d("dane z bazy", haslo.getHaslo()+" "+haslo.getTlumaczenie());
+					words.add(haslo.getTlumaczenie());
+					lv1_adapter.notifyDataSetChanged();
 
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block

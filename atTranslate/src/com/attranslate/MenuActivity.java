@@ -2,17 +2,17 @@ package com.attranslate;
 
 import com.attranslate.R;
 
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 
-public class MenuActivity extends ActionBarActivity {
+public class MenuActivity extends Activity {
 
 	Button start_btn, end_btn, authors_btn, help_btn; 
 	StartActivity app;

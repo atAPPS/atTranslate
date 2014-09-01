@@ -2,11 +2,11 @@ package com.attranslate;
 
 import com.attranslate.R;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
 
-public class AuthorsActivity extends ActionBarActivity {
+public class AuthorsActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

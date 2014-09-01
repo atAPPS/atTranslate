@@ -5,14 +5,13 @@ import java.util.TimerTask;
 
 import com.attranslate.R;
 
-
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 
 
-public class StartActivity extends ActionBarActivity {
+public class StartActivity extends Activity {
 
 	Timer timer;
 	MyTimerTask myTimerTask;
