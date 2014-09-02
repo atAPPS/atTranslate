@@ -23,7 +23,6 @@ public class DatabaseControler extends SQLiteOpenHelper {
 				"haslo text," + 
 		        "tlumaczenie text);" +
 				"");
-		
 	}
 
 	@Override
