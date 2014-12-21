@@ -71,7 +71,9 @@ public class TranslateActivity extends Activity {
         testTextView = (TextView) findViewById(R.id.testTextView);
     }
 
-    void initButton(){
+    //initialization - Translate Button
+
+    void initButton() {
         mainTranslateButton = (Button) findViewById(R.id.mainTranslateButton);
         mainTranslateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,30 +98,37 @@ public class TranslateActivity extends Activity {
     }
 
     void initSpinnerListeners() {
-        leftSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        //spinnerListener that handles both spinner clicks
+
+        AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                translatePresenter.onLeftSpinnerItemSelected(position);
+
+                Spinner selectedSpinner;
+                selectedSpinner = (Spinner) parent;
+                if(selectedSpinner.getId() == R.id.leftSpinner) {
+                    translatePresenter.onLeftSpinnerItemSelected(position);
+                }
+
+                if(selectedSpinner.getId() == R.id.rightSpinner) {
+                    translatePresenter.onRightSpinnerItemSelected(position);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        };
 
-        rightSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                translatePresenter.onRightSpinnerItemSelected(position);
-            }
+        //associate both spinners with one adapter, implement above
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+       leftSpinner.setOnItemSelectedListener(spinnerListener);
+       rightSpinner.setOnItemSelectedListener(spinnerListener);
     }
+
+    // testListView in order to check whether it is correctly implemented
 
     void testListView() {
         wordsListView = (ListView) findViewById(R.id.wordsListView);

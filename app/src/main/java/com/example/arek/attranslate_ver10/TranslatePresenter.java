@@ -12,28 +12,32 @@ public class TranslatePresenter {
     private TranslateModel translateModel;
     private Context translateActivityContext;
 
-    public TranslatePresenter(TranslateActivity translateActivity){
+    public TranslatePresenter(TranslateActivity translateActivity) {
         this.translateActivity = translateActivity;
         translateActivityContext = this.translateActivity.getApplicationContext();
         translateModel = new TranslateModel(translateActivityContext);
     }
 
-    void onMainTranslateButtonClicked(){
+    void onMainTranslateButtonClicked() {
         translateModel.buildStringRequest();
         translateModel.translateWord();
         translateActivity.setTestTextView(translateModel.getTranslatedText());
     }
 
-    void onLeftSpinnerItemSelected(int position){
+    void onLeftSpinnerItemSelected(int position) {
        translateModel.setSourceLanguage(position);
+       Log.i("info", translateModel.getSourceLanguage());
+
     }
 
-    void onRightSpinnerItemSelected(int position){
+    void onRightSpinnerItemSelected(int position) {
        translateModel.setTranslatedLanguage(position);
+       Log.i("info", translateModel.getTranslatedLanguage());
     }
 
-    void onEditTextChanged(CharSequence s){
+    void onEditTextChanged(CharSequence s) {
         translateModel.setSourceText(s.toString());
+        Log.i("info",s.toString());
     }
 
     void onListViewItemSelected(){

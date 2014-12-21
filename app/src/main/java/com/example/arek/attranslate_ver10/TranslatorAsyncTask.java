@@ -1,20 +1,14 @@
 package com.example.arek.attranslate_ver10;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
-import org.apache.http.Header;
-import org.apache.http.HeaderIterator;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolVersion;
-import org.apache.http.StatusLine;
+
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,9 +35,14 @@ public class TranslatorAsyncTask extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         try {
+
+            //pass built request to the parameter
             httpRequest.setURI(new URI(params[0]));
+
+            //get the response on the request
             httpResponse = httpClient.execute(httpRequest);
 
+            //formatting response to appriopriate String object
             BufferedReader input = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
             StringBuffer sBuffer = new StringBuffer();
 
