@@ -59,7 +59,9 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="4"
-            android:id="@+id/leftSpinner"></Spinner>
+            android:id="@+id/leftSpinner"
+            style="@style/whiteButton"
+            ></Spinner>
 
         <TextView
             android:layout_width="0dp"
@@ -70,7 +72,8 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="4"
-            android:id="@+id/rightSpinner"></Spinner>
+            android:id="@+id/rightSpinner"
+            style="@style/whiteButton"></Spinner>
 
         </LinearLayout>
     <TextView
@@ -94,23 +97,32 @@
             android:layout_height="fill_parent"
             android:layout_weight="8"
             android:text="@string/translate"
-            android:id="@+id/mainTranslateButton"/>
+            android:id="@+id/mainTranslateButton"
+            style="@style/whiteButton"
+            android:textColor="#ffcbffff"/>
 
         </LinearLayout>
-
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
     <TextView
         android:id="@+id/testTextView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:gravity="center"
-        android:textColor="#ff101424"
+        android:textColor="#FFFF99"
+        android:textStyle="bold"
         android:textSize="30dp"/>
-
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="6"
         android:weightSum="10">
 
         <TextView
@@ -122,7 +134,8 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="8"
-            android:id="@+id/wordsListView"></ListView>
+            android:id="@+id/wordsListView"
+            android:divider="@null"></ListView>
 
         </LinearLayout>
     </LinearLayout>

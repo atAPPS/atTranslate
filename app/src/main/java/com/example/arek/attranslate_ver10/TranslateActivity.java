@@ -1,12 +1,15 @@
 package com.example.arek.attranslate_ver10;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class TranslateActivity extends Activity {
@@ -30,6 +35,9 @@ public class TranslateActivity extends Activity {
 
     private ListView wordsListView;
     private ArrayAdapter<CharSequence> wordsAdapter;
+    private CustomListViewAdapter customListViewAdapter;
+
+    private ArrayList<Word> wordDatabase;
 
     private TranslatePresenter translatePresenter;
 
@@ -42,7 +50,19 @@ public class TranslateActivity extends Activity {
         initTexts();
         initButton();
         initSpinners();
+        initDatabase();
+        customListViewAdapter = new CustomListViewAdapter(this,wordDatabase);
         testListView();
+    }
+
+    void initDatabase() {
+        wordDatabase = new ArrayList<Word>();
+        Word word1 = new Word("Kot","Cat");
+        Word word2 = new Word("Pies","Dog");
+        Word word3 = new Word("Zielony", "Green");
+        wordDatabase.add(word1);
+        wordDatabase.add(word2);
+        wordDatabase.add(word3);
     }
 
     void initTranslatePresenter(){
@@ -71,7 +91,9 @@ public class TranslateActivity extends Activity {
         testTextView = (TextView) findViewById(R.id.testTextView);
     }
 
-    void initButton(){
+    //initialization - Translate Button
+
+    void initButton() {
         mainTranslateButton = (Button) findViewById(R.id.mainTranslateButton);
         mainTranslateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,35 +118,43 @@ public class TranslateActivity extends Activity {
     }
 
     void initSpinnerListeners() {
-        leftSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        //spinnerListener that handles both spinner clicks
+
+        AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                translatePresenter.onLeftSpinnerItemSelected(position);
+
+                Spinner selectedSpinner;
+                selectedSpinner = (Spinner) parent;
+                if(selectedSpinner.getId() == R.id.leftSpinner) {
+                    translatePresenter.onLeftSpinnerItemSelected(position);
+                }
+
+                if(selectedSpinner.getId() == R.id.rightSpinner) {
+                    translatePresenter.onRightSpinnerItemSelected(position);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        };
 
-        rightSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                translatePresenter.onRightSpinnerItemSelected(position);
-            }
+        //associate both spinners with one adapter, implement above
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+       leftSpinner.setOnItemSelectedListener(spinnerListener);
+       rightSpinner.setOnItemSelectedListener(spinnerListener);
     }
+
+    // testListView in order to check whether it is correctly implemented
 
     void testListView() {
         wordsListView = (ListView) findViewById(R.id.wordsListView);
-        wordsAdapter = ArrayAdapter.createFromResource(this, R.array.languages, android.R.layout.simple_list_item_1);
-        wordsListView.setAdapter(wordsAdapter);
+        wordsListView.setAdapter(customListViewAdapter);
+
+        Log.i("info","Enter testListView");
     }
 
     void setTestTextView(String word)
