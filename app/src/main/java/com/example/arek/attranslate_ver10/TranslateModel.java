@@ -63,16 +63,8 @@ public class TranslateModel {
         sourceLanguage = language.getLanguage(position);
     }
 
-    void setTranslatedLanguage(int position) {
+    void setTranslatedLanguage(int position){
         translatedLanguage = language.getLanguage(position);
-    }
-
-    String getSourceLanguage() {
-        return sourceLanguage;
-    }
-
-    String getTranslatedLanguage() {
-        return translatedLanguage;
     }
 
     String translateWord()
